@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Identitas</title>
+</head>
+<body>
+  <form id="form-identitas">
+    <label for="nama">Nama Lengkap:</label>
+    <input type="text" id="nama" name="nama"><br>
+
+    <label for="tgl-lahir">Tanggal Lahir:</label>
+    <input type="date" id="tgl-lahir" name="tgl-lahir"><br>
+
+    <label for="alamat">Alamat:</label>
+    <textarea id="alamat" name="alamat"></textarea><br>
+
+    <label for="no-hp">Nomor HP:</label>
+    <input type="tel" id="no-hp" name="no-hp"><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    const formIdentitas = document.getElementById('form-identitas');
+    const nama = document.getElementById('nama');
+    const tglLahir = document.getElementById('tgl-lahir');
+    const alamat = document.getElementById('alamat');
+    const noHp = document.getElementById('no-hp');
+
+    formIdentitas.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const data = [
+        ['Nama Lengkap', 'Tanggal Lahir', 'Alamat', 'Nomor HP'],
+        [nama.value, tglLahir.value, alamat.value, noHp.value]
+      ];
+      
+      const fileName = 'identitas.xlsx';
+      const sheetName = 'Sheet1';
+      
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      
+      XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+      
+      XLSX.writeFile(workbook, fileName);
+    });
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+</body>
+</html>
